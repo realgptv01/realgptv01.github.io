@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<style>
+body {
+  background-color: darkred;
+}
+
+h1 {
+  color: white;
+  text-align: left;
+  font-family: verdana;
+}
+
+h2 {
+  color: white;
+  text-align: left;
+  font-family: verdana;
+  font-size: 35px;
+}
+
+p {
+  font-family: verdana;
+  font-size: 20px;
+  color: white;
+  text-align: left;
+}
+a {
+  font-family: verdana;
+  font-size: 20px;
+  color: white;
+  text-align: left;
+}
+ .css-3d-text {
+    font-size: 95px;
+    color: #ff5e5e;
+    font-family: Verdana, Geneva, sans-serif;
+    text-shadow: 0px 0px 0 rgb(245,84,84),
+                 1px 1px 0 rgb(234,73,73),
+                 2px 2px 0 rgb(224,63,63),
+                 3px 3px 0 rgb(214,53,53),
+                 4px 4px 0 rgb(203,42,42),
+                 5px 5px 0 rgb(193,32,32),
+                 6px 6px 0 rgb(183,22,22),
+                 7px 7px 0 rgb(173,12,12),
+                 8px 8px 0 rgb(162,1,1),
+                 9px 9px 0 rgb(152,-9,0),
+                 10px 10px 0 rgb(142,-19,0),
+                 11px 11px 0 rgb(131,-30,0),
+                 12px 12px 0 rgb(121,-40,0),
+                 13px 13px  0 rgb(111,-50,0),
+                 14px 14px 13px rgba(0,0,0,1),
+                 14px 14px 1px rgba(0,0,0,0.5),
+                 0px 0px 13px rgba(0,0,0,.2);
+ }
+ 
+</style>
+<link rel="icon" type="image/x-icon" href="/official-site/favicon.ico">
+<div class="css-3d-text">GPTV01</div>
+<a href="/official-site/sitemap.html">Sitemap</a>
+<h1>Number to Roman Numerals</h1>
+<p><strong>Note: This converter only accepts numbers under 3999.<strong></p>
+<input type="number" id="numberInput" placeholder="Enter a number (1–3999)" style="font-size:20px; padding:5px;">
+<button onclick="convertToRoman()" style="font-size:20px; padding:5px;">Convert</button>
+
+<p id="result"></p>
+
+<script>
+function convertToRoman() {
+  let num = parseInt(document.getElementById("numberInput").value);
+  
+  if (isNaN(num) || num < 1 || num > 3999) {
+    document.getElementById("result").innerText = "Enter a number between 1 and 3999.";
+    return;
+  }
+
+  const romanMap = [
+    { value: 1000, symbol: "M" },
+    { value: 900, symbol: "CM" },
+    { value: 500, symbol: "D" },
+    { value: 400, symbol: "CD" },
+    { value: 100, symbol: "C" },
+    { value: 90, symbol: "XC" },
+    { value: 50, symbol: "L" },
+    { value: 40, symbol: "XL" },
+    { value: 10, symbol: "X" },
+    { value: 9, symbol: "IX" },
+    { value: 5, symbol: "V" },
+    { value: 4, symbol: "IV" },
+    { value: 1, symbol: "I" }
+  ];
+
+  let result = "";
+
+  for (let i = 0; i < romanMap.length; i++) {
+    while (num >= romanMap[i].value) {
+      result += romanMap[i].symbol;
+      num -= romanMap[i].value;
+    }
+  }
+
+  document.getElementById("result").innerText = "Roman Numeral: " + result;
+}
+</script>
