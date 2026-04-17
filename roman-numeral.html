@@ -100,3 +100,39 @@ function convertToRoman() {
   document.getElementById("result").innerText = "Roman Numeral: " + result;
 }
 </script>
+  <input type="text" id="romanInput" placeholder="Enter a Roman numeral (e.g. XIV)" style="font-size:20px; padding:5px;">
+<button onclick="convertToNumber()" style="font-size:20px; padding:5px;">Convert</button>
+
+<p id="result2"></p>
+
+<script>
+function convertToNumber() {
+  let str = document.getElementById("romanInput").value.toUpperCase();
+
+  if (!str.match(/^[IVXLCDM]+$/)) {
+    document.getElementById("result2").innerText = "Enter a valid Roman numeral.";
+    return;
+  }
+
+  const romanMap = {
+    I: 1, V: 5, X: 10, L: 50,
+    C: 100, D: 500, M: 1000
+  };
+
+  let total = 0;
+
+  for (let i = 0; i < str.length; i++) {
+    let current = romanMap[str[i]];
+    let next = romanMap[str[i + 1]];
+
+    if (next && current < next) {
+      total += (next - current);
+      i++; // skip next character
+    } else {
+      total += current;
+    }
+  }
+
+  document.getElementById("result2").innerText = "Number: " + total;
+}
+</script>
