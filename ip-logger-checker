@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>IP Logger Checker</title>
+<link rel="icon" type="image/x-icon" href="/official-site/favicon.ico">
+<style>
+body {
+  background-color: darkred;
+  margin: 20px;
+}
+
+h1 {
+  color: white;
+  text-align: left;
+  font-family: verdana;
+}
+
+h2 {
+  color: white;
+  text-align: left;
+  font-family: verdana;
+  font-size: 35px;
+}
+
+p {
+  font-family: verdana;
+  font-size: 20px;
+  color: white;
+  text-align: left;
+}
+
+a {
+  font-family: verdana;
+  font-size: 20px;
+  color: white;
+  text-align: left;
+}
+
+.css-3d-text {
+  font-size: 95px;
+  color: #ff5e5e;
+  font-family: Verdana, Geneva, sans-serif;
+  text-shadow: 0px 0px 0 rgb(245,84,84),
+               1px 1px 0 rgb(234,73,73),
+               2px 2px 0 rgb(224,63,63),
+               3px 3px 0 rgb(214,53,53),
+               4px 4px 0 rgb(203,42,42),
+               5px 5px 0 rgb(193,32,32),
+               6px 6px 0 rgb(183,22,22),
+               7px 7px 0 rgb(173,12,12),
+               8px 8px 0 rgb(162,1,1),
+               14px 14px 13px rgba(0,0,0,1),
+               14px 14px 1px rgba(0,0,0,0.5),
+               0px 0px 13px rgba(0,0,0,.2);
+}
+
+/* Checker UI elements */
+.checker-container {
+  margin-top: 30px;
+  font-family: verdana;
+}
+
+input[type="text"] {
+  width: 70%;
+  max-width: 500px;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #ff5e5e;
+  background-color: #220000;
+  color: white;
+  border-radius: 4px;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: #ff5e5e;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-family: verdana;
+  font-weight: bold;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+button:hover {
+  background-color: #e04444;
+}
+
+#result {
+  margin-top: 20px;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 4px;
+  display: none;
+  max-width: 600px;
+}
+
+.safe {
+  background-color: #1b4d3e;
+  color: #2ecc71;
+  border: 1px solid #2ecc71;
+}
+
+.danger {
+  background-color: #4a0000;
+  color: #ff4d4d;
+  border: 1px solid #ff4d4d;
+}
+
+/* Yellow Warning Styling for Creator Portals */
+.creator-warning {
+  background-color: #5c4d00;
+  color: #ffeb3b;
+  border: 1px solid #ffeb3b;
+}
+
+/* Dropdown component styling */
+details {
+  margin-top: 40px;
+  background-color: #3a0000;
+  padding: 15px;
+  border: 1px solid #ff5e5e;
+  border-radius: 4px;
+  max-width: 600px;
+  font-family: verdana;
+  color: white;
+}
+
+summary {
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+summary:hover {
+  color: #ff5e5e;
+}
+
+.domain-list {
+  margin-top: 15px;
+  background-color: #220000;
+  padding: 12px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 14px;
+  color: #ffcccc;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+</style>
+</head>
+<body>
+
+<div class="css-3d-text">IP Logger Checker</div>
+<a href="/official-site/sitemap.html">Sitemap</a>
+<p><strong>Checks if a link is an IP Logger so you can stay safe clicking links.</strong></p>
+<div class="checker-container">
+  <input type="text" id="urlInput" placeholder="Paste link here">
+  <button onclick="checkLink()">Check</button>
+  
+  <div id="result"></div>
+</div>
+
+<details>
+  <summary>Supported IP Loggers</summary>
+  <div class="domain-list" id="copyContainer">grabify.link
+grabify.org
+urlto.me
+urlty.co
+grem.io
+gyo.tc
+hd.gd
+onbit.pro
+snifferip.com
+unl.one
+leancoding.co
+stopify.co
+yo9.io
+g9x.de
+starrynight.link
+fortnight.space
+yip.su
+iplogger.org
+2no.co
+iplogger.com
+iplogger.ru
+yp9.ru
+blasze.com
+blasze.tk
+cliip.net
+ps3cfw.com
+ezstat.ru
+logger.online
+quickip.ru
+shorte.st</div>
+</details>
+
+<details>
+  <summary>What can IP Loggers log? (It's a lot!)</summary>
+  <div class="domain-list" id="copyContainer">Public IP Address
+Internal Local IP
+Internet Service Provider
+Organization / Network Owner 
+Connection Type (Wi-Fi/Cellular)
+VPN / Proxy Detection Flags
+Tor Network Usage Status
+Country
+State / Province / Region
+City
+Approximate Postal / ZIP Code
+Device Time Zone
+Device Type (Desktop/Mobile/Tablet)
+Manufacturer & Model Name
+Operating System & Exact Version
+System Architecture (32-bit/64-bit)
+Screen Resolution & Viewport Size
+Screen Orientation (Portrait/Landscape)
+Touch Screen Capabilities
+Battery Level & Charging Status
+GPU Vendor & WebGL Graphics Info
+Browser Name & VersionUser-Agent String Data
+Primary Language Settings
+JavaScript Status (Enabled/Disabled)
+Cookie Acceptance Status
+Incognito / Private Browsing Mode
+Ad Blocker Detection Flags
+WebRTC Leak Capabilities
+Referrer URL (Previous Website)
+Click Timestamp (Date & Time)</div>
+</details>
+
+<details>
+  <summary>Are IP Loggers illegal?</summary>
+  <div class="domain-list" id="copyContainer">Logging people's IPs without their knowledge is illegal.</div>
+</details>
+
+<script>
+const maliciousDomains = [
+  "grabify.link",
+  "grabify.org",
+  "urlto.me",
+  "urlty.co",
+  "grem.io",
+  "gyo.tc",
+  "hd.gd",
+  "onbit.pro",
+  "snifferip.com",
+  "unl.one",
+  "leancoding.co",
+  "stopify.co",
+  "yo9.io",
+  "g9x.de",
+  "starrynight.link",
+  "fortnight.space",
+  "yip.su",
+  "iplogger.org",
+  "2no.co",
+  "iplogger.com",
+  "iplogger.ru",
+  "yp9.ru",
+  "blasze.com",
+  "blasze.tk",
+  "cliip.net",
+  "ps3cfw.com",
+  "ezstat.ru",
+  "logger.online",
+  "quickip.ru",
+  "shorte.st"
+];
+
+function checkLink() {
+  const input = document.getElementById("urlInput").value.trim();
+  const resultDiv = document.getElementById("result");
+  
+  if (!input) {
+    resultDiv.style.display = "block";
+    resultDiv.className = "danger";
+    resultDiv.innerHTML = "Please enter a URL to check.";
+    return;
+  }
+
+  let processedUrl = input;
+  if (!/^https?:\/\//i.test(processedUrl)) {
+    processedUrl = 'http://' + processedUrl;
+  }
+
+  try {
+    const urlObj = new URL(processedUrl);
+    const hostname = urlObj.hostname.toLowerCase();
+    
+    // Check if domain is in our list
+    let isLogger = maliciousDomains.some(domain => hostname === domain || hostname.endsWith('.' + domain));
+    
+    resultDiv.style.display = "block";
+    
+    if (isLogger) {
+      // Determine if it's JUST the main domain website or root path (e.g., grabify.org/ or grabify.org)
+      const isJustDomain = urlObj.pathname === "/" || urlObj.pathname === "";
+      
+      if (isJustDomain) {
+        resultDiv.className = "creator-warning";
+        resultDiv.innerHTML = `This is an IP logger creator!`;
+      } else {
+        resultDiv.className = "danger";
+        resultDiv.innerHTML = `<strong>This link is an IP logger!</strong>`;
+      }
+    } else {
+      resultDiv.className = "safe";
+      resultDiv.innerHTML = `This link is safe!`;
+    }
+  } catch (e) {
+    resultDiv.style.display = "block";
+    resultDiv.className = "danger";
+    resultDiv.innerHTML = "Invalid URL structure. Please check the text and try again.";
+  }
+}
+</script>
+
+</body>
+</html>
