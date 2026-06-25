@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:title" content="GabrielRR - 3D Text Generator" />
 <meta property="og:description" content="Welcome to my official site! I make stuff, videos, mods, and more!" />
-<meta property="og:url" content="https://realgptv01.github.io/" />
+<meta property="og:url" content="https://realgptv01.github.io/3d-text.html" />
 <meta property="og:image" content="https://realgptv01.github.io/3d_text.png" />
 <meta property="og:type" content="website" />
 <meta name="theme-color" content="#8b0000">
-<link rel="icon" type="image/x-icon" href="/official-site/favicon.ico">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
 <title>GabrielRR</title>
 <style>
 body {
@@ -184,7 +184,7 @@ a:hover {
 <body>
 
   <div class="sidebar">
-    <a href="/official-site/sitemap.html">Sitemap</a>
+    <a href="/sitemap.html">Sitemap</a>
     
     <div class="control-group">
       <label for="textInput">Text</label>
@@ -249,6 +249,9 @@ a:hover {
     <div class="control-group">
       <button class="btn-png" id="savePNG">Save as PNG</button>
     </div>
+    <div class="control-group" style="margin-top: -10px;">
+      <button class="btn-png" id="saveTransparentPNG" style="background-color: #777; color: white;">Save as Transparent PNG</button>
+    </div>
   </div>
 
   <div id="mainContent" class="main-content">
@@ -269,7 +272,7 @@ a:hover {
     const textOutput = document.getElementById('textOutput');
     const mainContent = document.getElementById('mainContent');
 
-    // Drag and Drop Dragging elements references
+    // Drag and Drop handles
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('fileInput');
     const dropZoneText = document.getElementById('dropZoneText');
@@ -324,12 +327,9 @@ a:hover {
       textOutput.style.textShadow = shadowLayers.join(", ");
     }
 
-    // --- DRAG AND DROP TTF / OTF LOADING SYSTEM ENGINE ---
-    
-    // Trigger hidden browse file window when clicking the drop box
+    // --- DRAG AND DROP FONT LOADER SYSTEM ---
     dropZone.addEventListener('click', () => fileInput.click());
 
-    // Highlight drop box visual state when dragging a file inside it
     dropZone.addEventListener('dragover', (e) => {
       e.preventDefault();
       dropZone.classList.add('dragover');
@@ -365,7 +365,6 @@ a:hover {
         customFontCounter++;
         const fontName = `CustomFont-${customFontCounter}`;
         
-        // Dynamically append new @font-face style rule tag straight to head element container
         const newFontStyleNode = document.createElement('style');
         newFontStyleNode.textContent = `
           @font-face {
@@ -376,7 +375,6 @@ a:hover {
         `;
         document.head.appendChild(newFontStyleNode);
 
-        // Append and select the new custom item options node programmatically inside select list element
         const option = document.createElement('option');
         option.value = `'${fontName}'`;
         option.textContent = `Uploaded: ${file.name.substring(0, 15)}${file.name.length > 15 ? '...' : ''}`;
@@ -385,14 +383,13 @@ a:hover {
         
         dropZoneText.innerHTML = `Loaded successfully:<br><strong>${file.name}</strong>`;
         
-        // Give browser microsecond timestamp buffer window frame refresh cycles to safely mount font metrics data
         setTimeout(update3DText, 80);
       };
       reader.readAsDataURL(file);
     }
 
-    // --- CANVAS PNG GENERATOR SYSTEM ENGINE ---
-    document.getElementById('savePNG').addEventListener('click', () => {
+    // --- HIGH-FIDELITY CANVAS RENDERING ENGINE ---
+    function generate3DImage(isTransparent) {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       const text = textInput.value || " ";
@@ -404,7 +401,9 @@ a:hover {
       const textWidth = Math.ceil(textMetrics.width);
       const textHeight = fontSize * 1.4;
       const depth = parseInt(depthRange.value);
-      const padding = depth + parseInt(shadowBlur.value) + 60;
+      const sBlur = parseInt(shadowBlur.value);
+      
+      const padding = Math.max(depth, sBlur) + 80;
 
       canvas.width = textWidth + (padding * 2);
       canvas.height = textHeight + (padding * 2);
@@ -416,29 +415,33 @@ a:hover {
       const cx = canvas.width / 2;
       const cy = canvas.height / 2;
 
-      ctx.fillStyle = bgColor.value;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      if (!isTransparent) {
+        ctx.fillStyle = bgColor.value;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      if (sBlur > 0) {
+        ctx.save();
+        ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
+        ctx.shadowBlur = sBlur;
+        ctx.shadowOffsetX = stepX * depth;
+        ctx.shadowOffsetY = stepY * depth;
+        ctx.fillStyle = "rgba(0, 0, 0, 1)";
+        ctx.fillText(text, cx, cy);
+        ctx.restore();
+      }
 
       ctx.save();
-      ctx.shadowColor = "rgba(0, 0, 0, 1)";
-      ctx.shadowBlur = parseInt(shadowBlur.value);
+      ctx.shadowColor = "rgba(0, 0, 0, 0.6)";
+      ctx.shadowBlur = 2;
       ctx.shadowOffsetX = stepX * depth;
       ctx.shadowOffsetY = stepY * depth;
-      ctx.fillStyle = "rgba(0,0,0,0.01)";
-      ctx.fillText(text, cx, cy);
-      ctx.restore();
-
-      ctx.save();
-      ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-      ctx.shadowBlur = 1;
-      ctx.shadowOffsetX = stepX * depth;
-      ctx.shadowOffsetY = stepY * depth;
-      ctx.fillStyle = "rgba(0,0,0,0.01)";
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
       ctx.fillText(text, cx, cy);
       ctx.restore();
 
       const baseColor = hexToRgb(extrudeColor.value);
-      for (let i = depth; i >= 0; i--) {
+      for (let i = depth; i >= 0; i -= 0.1) {
         const factor = 1 - (i / (depth * 1.5));
         const r = Math.max(0, Math.floor(baseColor.r * factor));
         const g = Math.max(0, Math.floor(baseColor.g * factor));
@@ -452,10 +455,13 @@ a:hover {
       ctx.fillText(text, cx, cy);
 
       const link = document.createElement('a');
-      link.download = `${text.trim().toLowerCase()}-3d.png`;
+      link.download = `${text.trim().toLowerCase()}-${isTransparent ? 'transparent' : 'solid'}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
-    });
+    }
+
+    document.getElementById('savePNG').addEventListener('click', () => generate3DImage(false));
+    document.getElementById('saveTransparentPNG').addEventListener('click', () => generate3DImage(true));
 
     const allControls = [textInput, fontSelect, textColor, extrudeColor, bgColor, angleRange, depthRange, shadowBlur];
     allControls.forEach(control => control.addEventListener('input', update3DText));
