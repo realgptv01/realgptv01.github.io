@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/official-site/favicon.ico">
+<title>GabrielRR</title>
+<style>
+body {
+  background-color: darkred;
+  font-family: verdana;
+  margin: 0;
+  display: flex;
+  height: 100vh;
+  color: white;
+  overflow: hidden;
+}
+
+/* Sidebar Styling matching your typography scheme */
+.sidebar {
+  width: 320px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 25px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-right: 2px solid rgba(255, 255, 255, 0.1);
+  overflow-y: auto;
+  height: 100%;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ffcccc;
+  font-weight: bold;
+}
+
+input[type="text"], select {
+  padding: 10px;
+  background: rgb(80, 0, 0);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: verdana;
+}
+
+select option {
+  background: rgb(80, 0, 0);
+  color: #fff;
+}
+
+/* Drag and Drop Box Styling */
+.drop-zone {
+  border: 2px dashed rgba(255, 94, 94, 0.5);
+  border-radius: 6px;
+  padding: 15px;
+  text-align: center;
+  background: rgba(80, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.drop-zone.dragover {
+  background: rgba(255, 94, 94, 0.2);
+  border-color: #ff5e5e;
+}
+.drop-zone p {
+  margin: 0;
+  font-size: 12px;
+  color: #ffcccc;
+  pointer-events: none;
+}
+
+.color-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.color-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: center;
+}
+
+input[type="color"] {
+  width: 100%;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: none;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: #ff5e5e;
+}
+
+.btn-png {
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 13px;
+  background-color: #ff5e5e;
+  color: white;
+  font-family: verdana;
+  transition: opacity 0.2s;
+}
+
+.btn-png:hover {
+  opacity: 0.9;
+}
+
+/* Main content presentation area */
+.main-content {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;
+  transition: background-color 0.1s ease;
+}
+
+h1 {
+  color: white;
+  text-align: left;
+  font-family: verdana;
+  margin-top: 20px;
+}
+
+h2 {
+  color: white;
+  text-align: left;
+  font-family: verdana;
+  font-size: 35px;
+}
+
+p, a {
+  font-family: verdana;
+  font-size: 20px;
+  color: white;
+  text-align: left;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.css-3d-text {
+  font-size: 95px;
+  color: #ff5e5e;
+  font-family: Verdana, Geneva, sans-serif;
+  font-weight: bold;
+  text-align: left;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  word-break: break-word;
+}
+</style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <a href="/official-site/sitemap.html">Sitemap</a>
+    
+    <div class="control-group">
+      <label for="textInput">Text</label>
+      <input type="text" id="textInput" value="GabrielRR">
+    </div>
+
+    <div class="control-group">
+      <label>Custom Font</label>
+      <div id="dropZone" class="drop-zone">
+        <p id="dropZoneText">Drag & Drop .ttf/.otf here<br>or click to browse</p>
+        <input type="file" id="fileInput" accept=".ttf,.otf" style="display: none;">
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label for="fontSelect">Font</label>
+      <select id="fontSelect">
+        <option value="Verdana, Geneva, sans-serif">Verdana</option>
+        <option value="'Arial Black', 'Arial Bold', sans-serif">Arial Black</option>
+        <option value="Impact, Haettenschweiler, sans-serif">Impact</option>
+        <option value="'Trebuchet MS', Helvetica, sans-serif">Trebuchet MS</option>
+        <option value="'Segoe UI', Tahoma, Geneva, sans-serif">Segoe UI</option>
+        <option value="'Century Gothic', sans-serif">Century Gothic</option>
+        
+        <option value="Georgia, serif">Georgia</option>
+        <option value="'Times New Roman', Times, serif">Times New Roman</option>
+        <option value="'Courier New', Courier, monospace">Courier New (Monospace)</option>
+        <option value="'Brush Script MT', cursive">Brush Script (Cursive)</option>
+      </select>
+    </div>
+
+    <div class="color-row">
+      <div class="color-item">
+        <label for="textColor">Text</label>
+        <input type="color" id="textColor" value="#ff5e5e">
+      </div>
+      <div class="color-item">
+        <label for="extrudeColor">Side</label>
+        <input type="color" id="extrudeColor" value="#980c0c">
+      </div>
+      <div class="color-item">
+        <label for="bgColor">Bg Color</label>
+        <input type="color" id="bgColor" value="#8b0000">
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label id="angleLabel" for="angleRange">Orientation (135°)</label>
+      <input type="range" id="angleRange" min="0" max="360" value="135">
+    </div>
+
+    <div class="control-group">
+      <label id="depthLabel" for="depthRange">Extrusion</label>
+      <input type="range" id="depthRange" min="1" max="30" value="14">
+    </div>
+
+    <div class="control-group">
+      <label id="shadowBlurLabel" for="shadowBlur">Shadow Blur</label>
+      <input type="range" id="shadowBlur" min="0" max="40" value="13">
+    </div>
+
+    <div class="control-group">
+      <button class="btn-png" id="savePNG">Save as PNG</button>
+    </div>
+  </div>
+
+  <div id="mainContent" class="main-content">
+    <div id="textOutput" class="css-3d-text">GabrielRR</div>
+  </div>
+
+  <script>
+    const textInput = document.getElementById('textInput');
+    const fontSelect = document.getElementById('fontSelect');
+    const textColor = document.getElementById('textColor');
+    const extrudeColor = document.getElementById('extrudeColor');
+    const bgColor = document.getElementById('bgColor');
+    
+    const angleRange = document.getElementById('angleRange');
+    const depthRange = document.getElementById('depthRange');
+    const shadowBlur = document.getElementById('shadowBlur');
+    
+    const textOutput = document.getElementById('textOutput');
+    const mainContent = document.getElementById('mainContent');
+
+    // Drag and Drop Dragging elements references
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const dropZoneText = document.getElementById('dropZoneText');
+
+    let stepX = 0, stepY = 0;
+    let customFontCounter = 0;
+
+    function hexToRgb(hex) {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
+    }
+
+    function update3DText() {
+      document.getElementById('angleLabel').textContent = `Orientation (${angleRange.value}°)`;
+      document.getElementById('depthLabel').textContent = `3D Extrusion (${depthRange.value}px)`;
+      document.getElementById('shadowBlurLabel').textContent = `Shadow Blur (${shadowBlur.value}px)`;
+
+      const text = textInput.value || " ";
+      textOutput.textContent = text;
+      textOutput.style.fontFamily = fontSelect.value;
+      textOutput.style.color = textColor.value;
+      
+      document.body.style.backgroundColor = bgColor.value;
+      mainContent.style.backgroundColor = bgColor.value;
+
+      const angleInRadians = ((parseInt(angleRange.value) - 90) * Math.PI) / 180;
+      stepX = Math.cos(angleInRadians);
+      stepY = Math.sin(angleInRadians);
+
+      const depth = parseInt(depthRange.value);
+      const baseColor = hexToRgb(extrudeColor.value);
+      let shadowLayers = [];
+
+      for (let i = 0; i <= depth; i++) {
+        const factor = 1 - (i / (depth * 1.5));
+        const r = Math.max(0, Math.floor(baseColor.r * factor));
+        const g = Math.max(0, Math.floor(baseColor.g * factor));
+        const b = Math.max(0, Math.floor(baseColor.b * factor));
+        
+        shadowLayers.push(`${(stepX * i).toFixed(1)}px ${(stepY * i).toFixed(1)}px 0px rgb(${r},${g},${b})`);
+      }
+
+      const sBlur = parseInt(shadowBlur.value);
+      shadowLayers.push(`${(stepX * depth).toFixed(1)}px ${(stepY * depth).toFixed(1)}px ${sBlur}px rgba(0,0,0,1)`);
+      shadowLayers.push(`${(stepX * depth).toFixed(1)}px ${(stepY * depth).toFixed(1)}px 1px rgba(0,0,0,0.5)`);
+      shadowLayers.push(`0px 0px ${sBlur}px rgba(0,0,0,0.2)`);
+
+      textOutput.style.textShadow = shadowLayers.join(", ");
+    }
+
+    // --- DRAG AND DROP TTF / OTF LOADING SYSTEM ENGINE ---
+    
+    // Trigger hidden browse file window when clicking the drop box
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    // Highlight drop box visual state when dragging a file inside it
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length > 0) {
+        handleFontFile(e.dataTransfer.files[0]);
+      }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        handleFontFile(e.target.files[0]);
+      }
+    });
+
+    function handleFontFile(file) {
+      const fileExtension = file.name.split('.').pop().toLowerCase();
+      if (fileExtension !== 'ttf' && fileExtension !== 'otf') {
+        alert('Please drop a valid .ttf or .otf font file.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        customFontCounter++;
+        const fontName = `CustomFont-${customFontCounter}`;
+        
+        // Dynamically append new @font-face style rule tag straight to head element container
+        const newFontStyleNode = document.createElement('style');
+        newFontStyleNode.textContent = `
+          @font-face {
+            font-family: '${fontName}';
+            src: url('${e.target.result}') format('truetype');
+            font-weight: bold;
+          }
+        `;
+        document.head.appendChild(newFontStyleNode);
+
+        // Append and select the new custom item options node programmatically inside select list element
+        const option = document.createElement('option');
+        option.value = `'${fontName}'`;
+        option.textContent = `Uploaded: ${file.name.substring(0, 15)}${file.name.length > 15 ? '...' : ''}`;
+        fontSelect.appendChild(option);
+        fontSelect.value = `'${fontName}'`;
+        
+        dropZoneText.innerHTML = `Loaded successfully:<br><strong>${file.name}</strong>`;
+        
+        // Give browser microsecond timestamp buffer window frame refresh cycles to safely mount font metrics data
+        setTimeout(update3DText, 80);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // --- CANVAS PNG GENERATOR SYSTEM ENGINE ---
+    document.getElementById('savePNG').addEventListener('click', () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const text = textInput.value || " ";
+      const fontSize = 95; 
+
+      ctx.font = `bold ${fontSize}px ${fontSelect.value}`;
+      const textMetrics = ctx.measureText(text);
+      
+      const textWidth = Math.ceil(textMetrics.width);
+      const textHeight = fontSize * 1.4;
+      const depth = parseInt(depthRange.value);
+      const padding = depth + parseInt(shadowBlur.value) + 60;
+
+      canvas.width = textWidth + (padding * 2);
+      canvas.height = textHeight + (padding * 2);
+
+      ctx.font = `bold ${fontSize}px ${fontSelect.value}`;
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "center";
+
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+
+      ctx.fillStyle = bgColor.value;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.save();
+      ctx.shadowColor = "rgba(0, 0, 0, 1)";
+      ctx.shadowBlur = parseInt(shadowBlur.value);
+      ctx.shadowOffsetX = stepX * depth;
+      ctx.shadowOffsetY = stepY * depth;
+      ctx.fillStyle = "rgba(0,0,0,0.01)";
+      ctx.fillText(text, cx, cy);
+      ctx.restore();
+
+      ctx.save();
+      ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+      ctx.shadowBlur = 1;
+      ctx.shadowOffsetX = stepX * depth;
+      ctx.shadowOffsetY = stepY * depth;
+      ctx.fillStyle = "rgba(0,0,0,0.01)";
+      ctx.fillText(text, cx, cy);
+      ctx.restore();
+
+      const baseColor = hexToRgb(extrudeColor.value);
+      for (let i = depth; i >= 0; i--) {
+        const factor = 1 - (i / (depth * 1.5));
+        const r = Math.max(0, Math.floor(baseColor.r * factor));
+        const g = Math.max(0, Math.floor(baseColor.g * factor));
+        const b = Math.max(0, Math.floor(baseColor.b * factor));
+        
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
+        ctx.fillText(text, cx + (stepX * i), cy + (stepY * i));
+      }
+
+      ctx.fillStyle = textColor.value;
+      ctx.fillText(text, cx, cy);
+
+      const link = document.createElement('a');
+      link.download = `${text.trim().toLowerCase()}-3d.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+
+    const allControls = [textInput, fontSelect, textColor, extrudeColor, bgColor, angleRange, depthRange, shadowBlur];
+    allControls.forEach(control => control.addEventListener('input', update3DText));
+
+    update3DText();
+  </script>
+</body>
+</html>
